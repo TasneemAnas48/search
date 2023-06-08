@@ -122,18 +122,19 @@ export default {
             }
         },
         query_pro() {
-            this.axios.post(this.$store.state.url + "/query_processing/" + this.data_set, {
-                query: this.query
-            }).then(res => {
+            console.log(this.query)
+            const formData = new FormData()
+            formData.append('query', this.query)
+            this.axios.post(this.$store.state.url + "/query_processing/" + this.data_set, formData).then(res => {
                 console.log(res.data)
                 this.data_processing = res.data
                 
             });
         },
         query_index() {
-            this.axios.post(this.$store.state.url + "/query_indexing/" + this.data_set, {
-                query: this.query
-            }).then(res => {
+            const formData = new FormData()
+            formData.append('query', this.query)
+            this.axios.post(this.$store.state.url + "/query_indexing/" + this.data_set, formData).then(res => {
                 console.log(res.data)
                 this.data_indexing = res.data
                 this.response = true
