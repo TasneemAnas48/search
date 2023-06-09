@@ -19,16 +19,16 @@
                         <p style="font-size: 18px;margin-top: 17px;margin-right: 20px">Date Set:</p>
                         <div style="margin-left: 0px">
                             <v-radio-group v-model="data_set">
-                                <v-radio label="Life Style" value="1"></v-radio>
-                                <v-radio label="Data set 2" value="2"></v-radio>
+                                <v-radio label="Qoura" value="1"></v-radio>
+                                <v-radio label="LifeStyle" value="2"></v-radio>
                             </v-radio-group>
                         </div>
-                        <v-btn @click="submit" color="primary">
+                        <v-btn @click="submit" color="primary" rounded>
                             Inverted Index
                         </v-btn>
                     </v-col>
                 </v-row>
-                
+
             </v-container>
         </v-form>
     </div>
@@ -56,10 +56,10 @@ export default {
             console.log(this.data_set)
             if (this.data_set != null) {
                 this.axios.get(this.$store.state.url + "/inverted_index/" + this.data_set)
-                .then(res => {
-                    console.log(res.data)
-                    this.data = res.data
-                });
+                    .then(res => {
+                        console.log(res.data)
+                        this.data = res.data
+                    });
             }
         }
     },

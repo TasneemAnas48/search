@@ -9,17 +9,8 @@
                     <p style="font-size: 18px;margin-top: 17px;margin-right: 20px">Date Set:</p>
                     <div style="margin-left: 0px">
                         <v-radio-group v-model="data_set" row>
-                            <v-radio label="Life Style" value="1"></v-radio>
-                            <v-radio label="Data Set 2" value="2"></v-radio>
-                        </v-radio-group>
-                    </div>
-                </v-row>
-                <v-row style=" justify-content: center;">
-                    <p style="font-size: 18px;margin-top: 17px;margin-right: 20px">Operation:</p>
-                    <div style="margin-left: 0px">
-                        <v-radio-group v-model="operation" row>
-                            <v-radio label="Query Processing" value="pro"></v-radio>
-                            <v-radio label="Query Indexing" value="index"></v-radio>
+                            <v-radio label="Qoura" value="1"></v-radio>
+                            <v-radio label="LifeStyle" value="2"></v-radio>
                         </v-radio-group>
                     </div>
                 </v-row>
@@ -50,23 +41,11 @@
             <v-row style=" justify-content: center;">
                 <v-col cols="8">
                     <h5>Result:</h5>
-                    <v-row style=" justify-content: center;" v-if="operation == 'index'">
+                    <v-row style=" justify-content: center;">
                         <v-simple-table style="margin: 10px 30px 30px; padding: 0px;">
                             <template v-slot:default>
                                 <tbody>
-                                    <tr v-for="(item, index) in data_indexing" :key="index">
-                                        <td> {{ Object.keys(item)[0] }}</td>
-                                        <td> {{ Object.values(item)[0] }}</td>
-                                    </tr>
-                                </tbody>
-                            </template>
-                        </v-simple-table>
-                    </v-row>
-                    <v-row style=" justify-content: center;" v-if="operation == 'pro'">
-                        <v-simple-table style="margin: 10px 30px 30px; padding: 0px;">
-                            <template v-slot:default>
-                                <tbody>
-                                    <tr v-for="(item, index) in data_processing" :key="index">
+                                    <tr v-for="(item, index) in result" :key="index">
                                         <td> {{ Object.keys(item)[0] }}</td>
                                         <td> {{ Object.values(item)[0] }}</td>
                                     </tr>
@@ -88,56 +67,35 @@ export default {
     data: () => ({
         query: '',
         data_set: null,
-        operation: null,
         error_snackbar: false,
         response: false,
-        data_processing: [
+        result: [
             // {
-            //     "1": ["wtrev", "deytf", "ytdb", "utyht", "uitu"]
+            //     "1": "joijoijijuihyuhuogguutfgtufgyfgyugyu"
             // },
             // {
-            //     "2": ["tetry", "yujh", "rtejhf", "treh", "etrhy"]
+            //     "2": "uhbmhoiuu yh uyhiuh yuh uyh uhuh ui"
             // }
         ],
-        data_indexing: [
-            // {
-            //     "dfghj": "[1]"
-            // },
-            // {
-            //     "rtfyg": "[0]"
-            // }
-        ]
+        
 
     }),
     methods: {
         submit() {
             // console.log(this.query)
-            if (this.data_set == null || this.operation == null || this.query == '')
+            if (this.data_set == null || this.query == '')
                 this.error_snackbar = true
             else {
-                if (this.operation == "pro")
-                    this.query_pro()
-                if (this.operation == "index")
-                    this.query_index()
+                this.get_result()
             }
         },
-        query_pro() {
-            console.log(this.query)
-            const formData = new FormData()
-            formData.append('query', this.query)
-            this.axios.post(this.$store.state.url + "/query_processing/" + this.data_set, formData).then(res => {
-                console.log(res.data)
-                this.data_processing = res.data
-                this.response = true
-            });
-        },
-        query_index() {
+        get_result(){
             console.log(this.query)
             const formData = new FormData()
             formData.append('query', this.query)
             this.axios.post(this.$store.state.url + "/query_indexing/" + this.data_set, formData).then(res => {
                 console.log(res.data)
-                this.data_indexing = res.data
+                this.result = res.data
                 this.response = true
             });
         },

@@ -1,30 +1,25 @@
 <template>
     <b-navbar>
-        <b-collapse id="nav-collapse" is-nav>
-            <b-navbar-nav class="ml-auto">
+        <b-collapse id="nav-collapse" is-nav style="justify-content: center">
+            <b-navbar-nav style="column-gap: 10px">
                 <!-- <v-btn-toggle v-model="toggle" group color="primary accent-3"> -->
-                <v-btn @click="toggle = 'data-pre'" color="primary" text outlined>
+                <v-btn @click="toggle = 'data-pre'" color="primary" :text="!data_pre" :outlined="!data_pre">
                     Data Prepocessing
                 </v-btn>
-                <v-btn @click="toggle = 'inverted'" color="primary" text outlined>
+                <v-btn @click="toggle = 'inverted'" color="primary" :text="!inverted" :outlined="!inverted">
                     Inverted Index
                 </v-btn>
-                <v-btn @click="toggle = 'search'" color="primary" text outlined>
-                    Search
+                <v-btn @click="toggle = 'query-indexing'" color="primary" :text="!query_indexing"
+                    :outlined="!query_indexing">
+                    Query Indexing
                 </v-btn>
-                <!-- <v-btn @click="toggle = 'q-pro'" color="primary" text outlined>
+                <v-btn @click="toggle = 'query-processing'" color="primary" :text="!query_processing"
+                    :outlined="!query_processing">
                     Query Processing
                 </v-btn>
-                <v-btn @click="toggle = 'q-index'" color="primary" text outlined>
-                    Query Indexing
-                </v-btn> -->
-                <!-- </v-btn-toggle> -->
-                <!-- <b-nav-item-dropdown right>
-                    <template #button-content>
-                        <b-icon icon="list"></b-icon>
-                    </template>
-                    
-                </b-nav-item-dropdown> -->
+                <v-btn @click="toggle = 'result'" color="primary" :text="!result" :outlined="!result">
+                    Result
+                </v-btn>
             </b-navbar-nav>
         </b-collapse>
     </b-navbar>
@@ -37,17 +32,53 @@ export default {
 
     data: () => ({
         toggle: '',
+        route: '',
     }),
     watch: {
         toggle(newVal) {
-            this.$router.replace({ name: newVal });
+            if (this.route != newVal)
+                this.$router.replace({ name: newVal });
         }
     },
     computed: {
         currentToggle() {
             return this.toggle;
+        },
+        data_pre() {
+            if (this.toggle == 'data-pre')
+                return true
+            else
+                return false
+        },
+        inverted() {
+            if (this.toggle == 'inverted')
+                return true
+            else
+                return false
+        },
+        query_indexing() {
+            if (this.toggle == 'query-indexing')
+                return true
+            else
+                return false
+        },
+        query_processing() {
+            if (this.toggle == 'query-processing')
+                return true
+            else
+                return false
+        },
+        result() {
+            if (this.toggle == 'result')
+                return true
+            else
+                return false
         }
     },
+    mounted() {
+        this.route = this.$route.name
+        this.toggle = this.route
+    }
 
     // computed: {
     //     toggle() {
