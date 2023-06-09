@@ -36,7 +36,7 @@ export default {
     }),
     watch: {
         toggle(newVal) {
-            if (this.route != newVal)
+            // if (this.route != newVal)
                 this.$router.replace({ name: newVal });
         }
     },
@@ -76,7 +76,7 @@ export default {
         }
     },
     mounted() {
-        this.route = this.$route.name
+        // this.route = this.$route.name
         this.toggle = this.route
     }
 
